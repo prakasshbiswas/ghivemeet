@@ -434,28 +434,15 @@
   box-sizing: border-box;
 }
 
-/* Bottom Control Bar Customization */
+/* Bottom Control Bar Wrapper — provides background & border only, never overrides LiveKit button styles */
 .controlBarWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  min-height: 72px;
   background: #111;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0 16px;
-  gap: 12px;
+  padding: 8px 16px;
   z-index: 20;
   box-sizing: border-box;
-}
-
-/* Override LiveKit's own control bar styles so it fills our wrapper */
-.controlBarWrapper :global(.lk-control-bar) {
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: none;
-  padding: 0;
-  box-shadow: none;
-  justify-content: center;
 }
