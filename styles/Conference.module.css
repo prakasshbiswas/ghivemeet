@@ -220,13 +220,14 @@
 
 /* Video Display Area: Uses dynamic calc to prevent overlap */
 .videoArea {
-  flex: 1;
+  flex: 1 1 0;
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
   width: 100%;
-  height: calc(100% - 72px);
+  min-height: 0;
+  /* top = topBar (52px), bottom = controlBar (72px) + border (1px) */
   padding: 56px 8px 8px 8px;
   box-sizing: border-box;
   overflow: hidden;
@@ -241,33 +242,17 @@
   overflow: hidden;
   align-content: stretch;
   justify-content: stretch;
+  align-items: stretch;
+  justify-items: stretch;
 }
 
-/* 2x4 Portrait Layout (Mobile Portrait up to 8 participants) */
-@media (max-width: 768px) and (orientation: portrait) {
-  .grid2x4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
-  }
-}
+/* grid2x4 is handled entirely via inline styles in JSX — no conflicting CSS overrides needed */
 
-/* 4x2 Landscape Layout (Mobile Landscape / Tablet up to 8 participants) */
+/* Landscape: reduce top padding so more video space is available */
 @media (orientation: landscape) and (max-height: 600px) {
   .videoArea {
-    padding-top: 48px;
+    padding-top: 44px;
     padding-bottom: 4px;
-  }
-  .grid2x4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
-
-/* Fallback for wide screens */
-@media (min-width: 769px) and (orientation: landscape) {
-  .grid2x4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
   }
 }
 
@@ -289,6 +274,28 @@
   background: #1e293b;
   box-sizing: border-box;
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.tileWrapper :global(.lk-participant-tile),
+.spotlightMain :global(.lk-participant-tile),
+.thumbnailTile :global(.lk-participant-tile) {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.tileWrapper :global(.lk-participant-placeholder svg),
+.spotlightMain :global(.lk-participant-placeholder svg),
+.thumbnailTile :global(.lk-participant-placeholder svg) {
+  width: min(36%, 180px);
+  height: auto;
+  max-height: 60%;
+  padding: 0;
+}
+
+.thumbnailTile :global(.lk-participant-placeholder svg) {
+  width: min(60%, 70px);
 }
 
 .activeSpeakerTile {
@@ -323,10 +330,11 @@
   height: 100%;
   gap: 8px;
   min-height: 0;
+  overflow: hidden;
 }
 
 .spotlightMain {
-  flex: 1;
+  flex: 1 1 0;
   position: relative;
   width: 100%;
   height: 100%;
@@ -364,11 +372,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 72px;
+  flex-shrink: 0;
+  min-height: 72px;
   background: #111;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0 16px;
   gap: 12px;
   z-index: 20;
   box-sizing: border-box;
+}
+
+/* Override LiveKit's own control bar styles so it fills our wrapper */
+.controlBarWrapper :global(.lk-control-bar) {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  justify-content: center;
 }

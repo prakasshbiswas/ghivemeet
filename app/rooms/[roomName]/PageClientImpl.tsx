@@ -448,8 +448,12 @@ function CustomConferenceRoom({ roomName, room }: { roomName: string; room: Room
   // Active spotlight track
   const spotlightTrack = React.useMemo(() => {
     if (activeScreenShare) return activeScreenShare;
-    if (pinnedTrack && tracks.some((t) => t.participant.identity === pinnedTrack.participant.identity)) {
-      return pinnedTrack;
+    if (pinnedTrack) {
+      const currentPinnedTrack = tracks.find(
+        (t) =>
+          t.participant.identity === pinnedTrack.participant.identity && t.source === pinnedTrack.source,
+      );
+      if (currentPinnedTrack) return currentPinnedTrack;
     }
     return sortedTracks[0] || null;
   }, [activeScreenShare, pinnedTrack, sortedTracks, tracks]);
@@ -642,7 +646,11 @@ function CustomConferenceRoom({ roomName, room }: { roomName: string; room: Room
               {sortedTracks.length > 1 && (
                 <div className={confStyles.spotlightThumbnails}>
                   {sortedTracks
-                    .filter((t) => t.publication?.trackSid !== spotlightTrack?.publication?.trackSid)
+                    .filter(
+                      (t) =>
+                        t.participant.identity !== spotlightTrack?.participant.identity ||
+                        t.source !== spotlightTrack.source,
+                    )
                     .map((t) => {
                       const isSpeaking = immediateSpeakerIdentities.has(t.participant.identity);
                       return (
@@ -701,15 +709,17 @@ function CustomConferenceRoom({ roomName, room }: { roomName: string; room: Room
         </div>
 
         {/* LiveKit Control Bar */}
-        <ControlBar
-          controls={{
-            microphone: true,
-            camera: true,
-            chat: true,
-            screenShare: true,
-            settings: SHOW_SETTINGS_MENU,
-          }}
-        />
+        <div className={confStyles.controlBarWrapper}>
+          <ControlBar
+            controls={{
+              microphone: true,
+              camera: true,
+              chat: true,
+              screenShare: true,
+              settings: SHOW_SETTINGS_MENU,
+            }}
+          />
+        </div>
 
         {/* Side Chat */}
         <Chat
