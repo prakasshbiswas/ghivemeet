@@ -273,7 +273,7 @@ export default function Page() {
         <div className={styles.heroLeft}>
           <h1 className={styles.headline}>Video calls and meetings for everyone</h1>
           <p className={styles.subheadline}>
-            Connect, collaborate, and celebrate from anywhere with G-Hive Meet. High-performance, secure WebRTC video calls powered by GMakesIT.
+            Connect, collaborate, and celebrate from anywhere with G-Hive Meet. High-performance, secure WebRTC video calls powered by GHivePH and GMakesIT.
           </p>
 
           {/* Action Row */}
@@ -356,10 +356,7 @@ export default function Page() {
                 disabled={!joinCode.trim()}
                 className={styles.joinBtn}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
-                </svg>
-                <span>Join</span>
+                Join
               </button>
             </form>
           </div>
@@ -369,7 +366,7 @@ export default function Page() {
           {/* Sublinks */}
           <div className={styles.learnMoreRow}>
             <div className={styles.encryptionBadge}>
-              <span>Powered by GMakesIT</span>
+              <span>Powered by LiveKit WebRTC</span>
             </div>
 
             <div className={styles.encryptionBadge}>
@@ -432,7 +429,7 @@ export default function Page() {
       {/* Footer */}
       <footer className={styles.footer}>
         <div>
-          <span>Powered by GMakesIT</span>
+          <span>Powered by GHivePH and GMakesIT.</span>
         </div>
         <div className={styles.footerLinks}>
           <span className={styles.footerLink}>Optional end-to-end encryption</span>
