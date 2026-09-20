@@ -273,7 +273,7 @@ export default function Page() {
         <div className={styles.heroLeft}>
           <h1 className={styles.headline}>Video calls and meetings for everyone</h1>
           <p className={styles.subheadline}>
-            Connect, collaborate, and celebrate from anywhere with G-Hive Meet. High-performance, secure WebRTC video calls powered by GHivePH and GMakesIT.
+            Connect, collaborate, and celebrate from anywhere with G-Hive Meet. High-performance, secure WebRTC video calls powered by GMakesIT.
           </p>
 
           {/* Action Row */}
@@ -366,7 +366,7 @@ export default function Page() {
           {/* Sublinks */}
           <div className={styles.learnMoreRow}>
             <div className={styles.encryptionBadge}>
-              <span>Powered by LiveKit WebRTC</span>
+              <span>Powered by GMakesIT</span>
             </div>
 
             <div className={styles.encryptionBadge}>
@@ -429,7 +429,7 @@ export default function Page() {
       {/* Footer */}
       <footer className={styles.footer}>
         <div>
-          <span>Powered by GHivePH and GMakesIT.</span>
+          <span>Powered by GMakesIT</span>
         </div>
         <div className={styles.footerLinks}>
           <span className={styles.footerLink}>Optional end-to-end encryption</span>

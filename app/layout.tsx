@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s | G-Hive Meet',
   },
   description:
-    'High-performance WebRTC video conferencing with end-to-end encryption, Krisp noise cancellation, and sub-50ms latency powered by GHivePH and GMakesIT.',
+    'High-performance WebRTC video conferencing with end-to-end encryption, Krisp noise cancellation, and sub-50ms latency powered by GMakesIT.',
   twitter: {
     creator: '@ghiveph',
     site: '@ghiveph',
