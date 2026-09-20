@@ -332,14 +332,8 @@ export default function Page() {
               <div className={styles.inputContainer}>
                 <span className={styles.keyboardIcon}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="2" y="4" width="20" height="16" rx="2" />
-                    <line x1="6" y1="8" x2="6.01" y2="8" />
-                    <line x1="10" y1="8" x2="10.01" y2="8" />
-                    <line x1="14" y1="8" x2="14.01" y2="8" />
-                    <line x1="18" y1="8" x2="18.01" y2="8" />
-                    <line x1="6" y1="12" x2="6.01" y2="12" />
-                    <line x1="18" y1="12" x2="18.01" y2="12" />
-                    <line x1="7" y1="16" x2="17" y2="16" />
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <line x1="8" y1="14" x2="16" y2="14" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 </span>
                 <input
@@ -356,7 +350,10 @@ export default function Page() {
                 disabled={!joinCode.trim()}
                 className={styles.joinBtn}
               >
-                Join
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
+                </svg>
+                <span>Join</span>
               </button>
             </form>
           </div>

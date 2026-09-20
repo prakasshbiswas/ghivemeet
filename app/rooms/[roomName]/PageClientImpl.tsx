@@ -34,6 +34,9 @@ const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
 const SHOW_SETTINGS_MENU = process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU == 'true';
 
+import styles from '@/styles/Conference.module.css';
+import { Toaster, toast } from 'react-hot-toast';
+
 export function PageClientImpl(props: {
   roomName: string;
   region?: string;
@@ -44,6 +47,8 @@ export function PageClientImpl(props: {
   const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(
     undefined,
   );
+  const [copied, setCopied] = React.useState(false);
+
   const preJoinDefaults = React.useMemo(() => {
     return {
       username: '',
@@ -54,6 +59,22 @@ export function PageClientImpl(props: {
   const [connectionDetails, setConnectionDetails] = React.useState<ConnectionDetails | undefined>(
     undefined,
   );
+
+  const handleCopyMeetingLink = React.useCallback(() => {
+    if (typeof window !== 'undefined') {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(
+        () => {
+          setCopied(true);
+          toast.success('Meeting link copied to clipboard!');
+          setTimeout(() => setCopied(false), 2500);
+        },
+        () => {
+          toast.error('Failed to copy meeting link');
+        },
+      );
+    }
+  }, []);
 
   const handlePreJoinSubmit = React.useCallback(async (values: LocalUserChoices) => {
     setPreJoinChoices(values);
@@ -71,13 +92,83 @@ export function PageClientImpl(props: {
 
   return (
     <main data-lk-theme="default" style={{ height: '100%' }}>
+      <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
       {connectionDetails === undefined || preJoinChoices === undefined ? (
-        <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
-          <PreJoin
-            defaults={preJoinDefaults}
-            onSubmit={handlePreJoinSubmit}
-            onError={handlePreJoinError}
-          />
+        <div className={styles.preJoinWrapper}>
+          <div className={styles.preJoinCard}>
+            {/* Top Meeting Info Banner with Copy Button */}
+            <div className={styles.meetingBanner}>
+              <div className={styles.meetingInfo}>
+                <span className={styles.meetingLabel}>MEETING ROOM</span>
+                <span className={styles.meetingRoomName}>{props.roomName}</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopyMeetingLink}
+                className={`${styles.copyBtn} ${copied ? styles.copyBtnCopied : ''}`}
+                title="Copy meeting link to clipboard"
+              >
+                {copied ? (
+                  <>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>Link Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <span>Copy Meeting Link</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* LiveKit Camera / Mic PreJoin Component */}
+            <PreJoin
+              defaults={preJoinDefaults}
+              onSubmit={handlePreJoinSubmit}
+              onError={handlePreJoinError}
+            />
+
+            {/* Footer Branding */}
+            <div className={styles.preJoinFooter}>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              <span>Powered by GMakesIT</span>
+            </div>
+          </div>
         </div>
       ) : (
         <VideoConferenceComponent
@@ -88,6 +179,7 @@ export function PageClientImpl(props: {
             hq: props.hq,
             singlePeerConnection: props.singlePeerConnection,
           }}
+          roomName={props.roomName}
         />
       )}
     </main>
@@ -102,7 +194,26 @@ function VideoConferenceComponent(props: {
     codec: VideoCodec;
     singlePeerConnection: boolean;
   };
+  roomName?: string;
 }) {
+  const [copiedInMeeting, setCopiedInMeeting] = React.useState(false);
+
+  const handleCopyInMeeting = React.useCallback(() => {
+    if (typeof window !== 'undefined') {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(
+        () => {
+          setCopiedInMeeting(true);
+          toast.success('Meeting link copied!');
+          setTimeout(() => setCopiedInMeeting(false), 2500);
+        },
+        () => {
+          toast.error('Failed to copy link');
+        },
+      );
+    }
+  }, []);
+
   const keyProvider = new ExternalE2EEKeyProvider();
   const { worker, e2eePassphrase } = useSetupE2EE();
   const e2eeEnabled = !!(e2eePassphrase && worker);
@@ -224,7 +335,15 @@ function VideoConferenceComponent(props: {
   }, [lowPowerMode]);
 
   return (
-    <div className="lk-room-container">
+    <div className="lk-room-container" style={{ position: 'relative' }}>
+      {props.roomName && (
+        <div className={styles.inMeetingBadge}>
+          <span>{props.roomName}</span>
+          <button type="button" onClick={handleCopyInMeeting} title="Copy meeting link">
+            {copiedInMeeting ? '✓ Copied' : 'Copy link'}
+          </button>
+        </div>
+      )}
       <RoomContext.Provider value={room}>
         <KeyboardShortcuts />
         <VideoConference
