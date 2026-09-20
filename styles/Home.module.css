@@ -276,25 +276,37 @@
 }
 
 .joinBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #1a73e8;
+  color: #ffffff;
   border: none;
-  background: transparent;
-  color: #1a73e8;
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 48px;
   font-size: 14px;
   font-weight: 500;
-  height: 48px;
-  padding: 0 16px;
-  border-radius: 4px;
+  letter-spacing: 0.25px;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.joinBtn:disabled {
-  color: #80868b;
-  cursor: not-allowed;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .joinBtn:hover:not(:disabled) {
-  background-color: rgba(26, 115, 232, 0.08);
+  background-color: #1557d0;
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+}
+
+.joinBtn:active:not(:disabled) {
+  background-color: #174ea6;
+}
+
+.joinBtn:disabled {
+  background-color: #e8eaed;
+  color: #9aa0a6;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 /* Divider & Sub-links */
