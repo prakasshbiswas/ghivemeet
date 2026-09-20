@@ -155,68 +155,135 @@
 }
 
 .topBar {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
-  height: 52px;
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
-  pointer-events: auto;
+  padding: 8px 12px;
+  height: 48px;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-sizing: border-box;
+  gap: 6px;
+  overflow: hidden;
 }
 
 .topBarLeft {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 .topBarRight {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .roomTag {
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 4px 8px;
   color: #fff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+  flex-shrink: 1;
+}
+
+/* Hide the monitor icon svg inside roomTag on very small screens */
+.roomTag svg {
+  flex-shrink: 0;
 }
 
 .topActionBtn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  padding: 6px 12px;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 5px 10px;
   color: #e2e8f0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .topActionBtn:hover {
   background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
 }
+
+/* On mobile (≤480px): hide button text labels, show icon only */
+@media (max-width: 480px) {
+  .topBar {
+    padding: 6px 10px;
+    height: 44px;
+    gap: 5px;
+  }
+
+  .topActionBtn {
+    padding: 5px 7px;
+    gap: 0;
+  }
+
+  /* Hide text spans inside action buttons */
+  .topActionBtn span {
+    display: none;
+  }
+
+  /* Hide the "Powered by GMakesIT" badge entirely in top bar */
+  .brandBadge {
+    display: none;
+  }
+
+  .roomTag {
+    max-width: 90px;
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
+
+/* Landscape phones: even tighter */
+@media (max-height: 500px) and (orientation: landscape) {
+  .topBar {
+    height: 38px;
+    padding: 4px 10px;
+  }
+
+  .topActionBtn {
+    padding: 3px 7px;
+  }
+
+  .topActionBtn span {
+    display: none;
+  }
+
+  .brandBadge {
+    display: none;
+  }
+}
+
 
 /* Video Display Area: Uses dynamic calc to prevent overlap */
 .videoArea {

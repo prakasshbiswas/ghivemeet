@@ -264,8 +264,9 @@ function VideoConferenceComponent(props: {
         .then(() => {
           room.setE2EEEnabled(true).catch((e) => {
             if (e instanceof DeviceUnsupportedError) {
-              alert(
-                `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
+              toast.error(
+                "Your browser doesn't support encrypted meetings. Please update your browser and try again.",
+                { duration: 8000 },
               );
               console.error(e);
             } else {
@@ -324,12 +325,46 @@ function VideoConferenceComponent(props: {
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
   const handleError = React.useCallback((error: Error) => {
     console.error(error);
-    alert(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+    const msg = error?.message || '';
+    const isPermissionDenied =
+      msg.toLowerCase().includes('permission denied') ||
+      msg.toLowerCase().includes('notallowed') ||
+      error?.name === 'NotAllowedError';
+    const isDeviceNotFound =
+      msg.toLowerCase().includes('device not found') ||
+      msg.toLowerCase().includes('notfound') ||
+      error?.name === 'NotFoundError';
+
+    if (isPermissionDenied) {
+      toast(
+        '📷 Camera/Microphone access was denied. Please allow access in your browser settings and reload the page.',
+        {
+          duration: 8000,
+          style: {
+            background: '#1e293b',
+            color: '#fff',
+            border: '1px solid #ef4444',
+            fontSize: '13px',
+            maxWidth: '360px',
+            lineHeight: '1.5',
+          },
+        },
+      );
+    } else if (isDeviceNotFound) {
+      toast.error('No camera or microphone found. Please connect a device and try again.', {
+        duration: 6000,
+      });
+    } else {
+      toast.error(`Connection error: ${msg || 'Unknown error. Check console for details.'}`, {
+        duration: 6000,
+      });
+    }
   }, []);
   const handleEncryptionError = React.useCallback((error: Error) => {
     console.error(error);
-    alert(
-      `Encountered an unexpected encryption error, check the console logs for details: ${error.message}`,
+    toast.error(
+      `Encryption error: ${error.message || 'Check console for details.'}`,
+      { duration: 6000 },
     );
   }, []);
 
