@@ -553,14 +553,36 @@ function CustomConferenceRoom({ roomName, room }: { roomName: string; room: Room
     }
   };
 
-  // Toggle pin on participant
-  const handleTileClick = (track: TrackReferenceOrPlaceholder) => {
+  // Single click on tile = request browser fullscreen on that element
+  const handleTileFullscreen = (el: HTMLDivElement | null) => {
+    if (!el) return;
+    if (document.fullscreenElement === el) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      el.requestFullscreen({ navigationUI: 'hide' }).catch(() => {
+        // Fullscreen blocked (e.g. iOS) — silently ignore
+      });
+    }
+  };
+
+  // Pin button on tile = pin/unpin to spotlight
+  const handleTilePin = (e: React.MouseEvent, track: TrackReferenceOrPlaceholder) => {
+    e.stopPropagation(); // don't trigger fullscreen
     if (pinnedTrack?.participant.identity === track.participant.identity) {
       setPinnedTrack(null);
       toast('Unpinned participant');
     } else {
       setPinnedTrack(track);
       toast.success(`Pinned ${track.participant.name || track.participant.identity}`);
+    }
+  };
+
+  // Spotlight thumbnail click still pins
+  const handleTileClick = (track: TrackReferenceOrPlaceholder) => {
+    if (pinnedTrack?.participant.identity === track.participant.identity) {
+      setPinnedTrack(null);
+    } else {
+      setPinnedTrack(track);
     }
   };
 
@@ -724,17 +746,20 @@ function CustomConferenceRoom({ roomName, room }: { roomName: string; room: Room
                     className={`${confStyles.tileWrapper} ${isSpeaking ? confStyles.activeSpeakerTile : ''} ${
                       isPinned ? confStyles.pinnedTile : ''
                     }`}
-                    onClick={() => handleTileClick(t)}
-                    title={isPinned ? 'Click to unpin' : 'Click to pin'}
+                    onClick={(e) => handleTileFullscreen(e.currentTarget)}
+                    title="Click to fullscreen · Pin icon to pin"
                   >
-                    {isPinned && (
-                      <div className={confStyles.pinIconBadge}>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" />
-                        </svg>
-                        <span>Pinned</span>
-                      </div>
-                    )}
+                    {/* Pin button overlay — always visible on pinned, hover-only otherwise */}
+                    <button
+                      type="button"
+                      className={`${confStyles.pinBtn} ${isPinned ? confStyles.pinBtnActive : ''}`}
+                      onClick={(e) => handleTilePin(e, t)}
+                      title={isPinned ? 'Unpin' : 'Pin to spotlight'}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" />
+                      </svg>
+                    </button>
                     <ParticipantTile trackRef={t} />
                   </div>
                 );
