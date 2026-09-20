@@ -337,9 +337,16 @@ function VideoConferenceComponent(props: {
 
     if (isPermissionDenied) {
       toast(
-        '📷 Camera/Microphone access was denied. Please allow access in your browser settings and reload the page.',
+        'Camera / Microphone access was denied. Please allow access in your browser settings and reload the page.',
         {
           duration: 8000,
+          icon: (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M23 7l-7 5 7 5V7z" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+              <line x1="1" y1="1" x2="23" y2="23" />
+            </svg>
+          ),
           style: {
             background: '#1e293b',
             color: '#fff',
@@ -520,9 +527,15 @@ function CustomConferenceRoom({ roomName, room }: { roomName: string; room: Room
     // If mobile or getDisplayMedia is not reliably available
     if (isMobileDevice || !hasDisplayMedia) {
       toast(
-        'Screen sharing is not supported on mobile web browsers. Please join from a desktop browser (Chrome, Edge, or Firefox) to share your screen.',
+        'Screen sharing is not supported on mobile browsers. Please join from a desktop browser (Chrome, Edge, or Firefox) to share your screen.',
         {
-          icon: 'ℹ️',
+          icon: (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          ),
           duration: 6000,
           style: {
             background: '#1e293b',
