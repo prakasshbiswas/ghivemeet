@@ -1,40 +1,601 @@
-.main {
-  position: relative;
-  display: grid;
-  gap: 1rem;
-  justify-content: center;
-  place-content: center;
-  justify-items: center;
-  overflow: auto;
-  flex-grow: 1;
-}
+/* Google Meet Style: Clean Blue & White Design System */
 
-.tabContainer {
-  width: 100%;
-  max-width: 500px;
-  padding-inline: 2rem;
-}
-
-.tabSelect {
+.container {
   display: flex;
-  justify-content: stretch;
-  gap: 0.125rem;
-  padding: 0.125rem;
-  margin: 0 auto 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.5rem;
-}
-
-.tabSelect > * {
-  width: 100%;
-}
-
-.tabContent {
-  display: flex;
-  justify-content: center;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.5rem;
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #202124;
+  font-family: 'Google Sans', Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header Navbar */
+.navHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  height: 64px;
+  box-sizing: border-box;
+}
+
+.brandGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brandLogoImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.brandTitle {
+  font-size: 22px;
+  font-weight: 400;
+  color: #5f6368;
+  letter-spacing: -0.3px;
+}
+
+.brandTitleHighlight {
+  font-weight: 500;
+  color: #1a73e8;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dateTimeText {
+  font-size: 18px;
+  color: #5f6368;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .dateTimeText {
+    display: none;
+  }
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #5f6368;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.iconButton:hover {
+  background-color: #f1f3f4;
+  color: #202124;
+}
+
+/* Main Hero Body */
+.mainHero {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 48px;
+  box-sizing: border-box;
+  gap: 64px;
+}
+
+@media (max-width: 992px) {
+  .mainHero {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+    gap: 48px;
+  }
+}
+
+/* Left Hero Content */
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  max-width: 580px;
+}
+
+.headline {
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 52px;
+  color: #1f1f1f;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.subheadline {
+  font-size: 18px;
+  line-height: 28px;
+  color: #5f6368;
+  font-weight: 400;
+  margin: 0 0 36px 0;
+}
+
+/* Action Controls Row */
+.actionRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: relative;
+}
+
+/* New Meeting Primary Button */
+.newMeetingBtnWrap {
+  position: relative;
+}
+
+.newMeetingBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #1a73e8;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.newMeetingBtn:hover {
+  background-color: #1557d0;
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+}
+
+.newMeetingBtn:active {
+  background-color: #174ea6;
+}
+
+/* New Meeting Dropdown Menu */
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 280px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+  padding: 8px 0;
+  z-index: 50;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: none;
+  color: #3c4043;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.dropdownItem:hover {
+  background-color: #f1f3f4;
+}
+
+.dropdownItemIcon {
+  color: #5f6368;
+  display: flex;
+  align-items: center;
+}
+
+/* Join Input Form */
+.joinForm {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.keyboardIcon {
+  position: absolute;
+  left: 14px;
+  color: #5f6368;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.joinInput {
+  height: 48px;
+  padding: 0 16px 0 44px;
+  border: 1px solid #747775;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #1f1f1f;
+  background-color: #ffffff;
+  outline: none;
+  width: 250px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+@media (max-width: 540px) {
+  .joinInput {
+    width: 200px;
+  }
+}
+
+.joinInput:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 1px #1a73e8;
+}
+
+.joinInput::placeholder {
+  color: #747775;
+}
+
+.joinBtn {
+  border: none;
+  background: transparent;
+  color: #1a73e8;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.joinBtn:disabled {
+  color: #80868b;
+  cursor: not-allowed;
+}
+
+.joinBtn:hover:not(:disabled) {
+  background-color: rgba(26, 115, 232, 0.08);
+}
+
+/* Divider & Sub-links */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #dadce0;
+  margin: 36px 0 20px 0;
+}
+
+.learnMoreRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.learnMoreLink {
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.learnMoreLink:hover {
+  text-decoration: underline;
+}
+
+.encryptionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #5f6368;
+  font-size: 13px;
+}
+
+/* Right Column: Google Meet Interactive Carousel */
+.heroRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.carouselContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 440px;
+  width: 100%;
+}
+
+.carouselImageWrap {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: #f0f4f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.carouselTitle {
+  font-size: 24px;
+  font-weight: 400;
+  color: #202124;
+  margin: 0 0 12px 0;
+}
+
+.carouselDescription {
+  font-size: 14px;
+  line-height: 20px;
+  color: #5f6368;
+  margin: 0 0 24px 0;
+  max-width: 380px;
+}
+
+/* Carousel Navigation Controls */
+.carouselControls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.carouselArrowBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #dadce0;
+  background-color: #ffffff;
+  color: #5f6368;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.carouselArrowBtn:hover {
+  background-color: #f1f3f4;
+  color: #202124;
+  border-color: #bdc1c6;
+}
+
+.dotsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #dadce0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.activeDot {
+  background-color: #1a73e8;
+  transform: scale(1.2);
+}
+
+/* Google Meet Modals / Dialogs */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.modalCard {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12),
+    0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 480px;
+  padding: 24px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #202124;
+  margin: 0;
+}
+
+.closeModalBtn {
+  border: none;
+  background: transparent;
+  color: #5f6368;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.closeModalBtn:hover {
+  background-color: #f1f3f4;
+  color: #202124;
+}
+
+.modalBody {
+  font-size: 14px;
+  line-height: 20px;
+  color: #5f6368;
+  margin-bottom: 24px;
+}
+
+.copyLinkBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #f1f3f4;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+.linkText {
+  font-size: 14px;
+  color: #3c4043;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: all;
+}
+
+.copyIconBtn {
+  border: none;
+  background: transparent;
+  color: #1a73e8;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.copyIconBtn:hover {
+  background-color: #e8f0fe;
+}
+
+/* Settings Modal Form */
+.settingsSection {
+  margin-bottom: 20px;
+}
+
+.settingsSectionTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #202124;
+  margin-bottom: 8px;
+}
+
+.settingsSelect {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 4px;
+  border: 1px solid #dadce0;
+  font-size: 14px;
+  color: #202124;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.settingsSelect:focus {
+  border-color: #1a73e8;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #3c4043;
+}
+
+.checkboxInput {
+  width: 18px;
+  height: 18px;
+  accent-color: #1a73e8;
+  cursor: pointer;
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid #dadce0;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #5f6368;
+  background-color: #ffffff;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footerLinks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footerLink {
+  color: #5f6368;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  color: #1a73e8;
 }

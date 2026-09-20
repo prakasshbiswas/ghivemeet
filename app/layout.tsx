@@ -5,41 +5,41 @@ import type { Metadata, Viewport } from 'next';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://meet.ghiveph.com'),
   title: {
-    default: 'LiveKit Meet | Conference app build with LiveKit open source',
-    template: '%s',
+    default: 'G-Hive Meet | Enterprise Video Conferencing by GHivePH & GMakesIT',
+    template: '%s | G-Hive Meet',
   },
   description:
-    'LiveKit is an open source WebRTC project that gives you everything needed to build scalable and real-time audio and/or video experiences in your applications.',
+    'High-performance WebRTC video conferencing with end-to-end encryption, Krisp noise cancellation, and sub-50ms latency powered by GHivePH and GMakesIT.',
   twitter: {
-    creator: '@livekitted',
-    site: '@livekitted',
+    creator: '@ghiveph',
+    site: '@ghiveph',
     card: 'summary_large_image',
   },
   openGraph: {
-    url: 'https://meet.livekit.io',
+    url: 'https://meet.ghiveph.com',
     images: [
       {
-        url: 'https://meet.livekit.io/images/livekit-meet-open-graph.png',
-        width: 2000,
-        height: 1000,
+        url: '/images/gdelivers-logo.png',
+        width: 1200,
+        height: 1200,
         type: 'image/png',
       },
     ],
-    siteName: 'LiveKit Meet',
+    siteName: 'G-Hive Meet',
   },
   icons: {
     icon: {
       rel: 'icon',
-      url: '/favicon.ico',
+      url: '/images/gdelivers-logo.png',
     },
     apple: [
       {
         rel: 'apple-touch-icon',
-        url: '/images/livekit-apple-touch.png',
+        url: '/images/gdelivers-logo.png',
         sizes: '180x180',
       },
-      { rel: 'mask-icon', url: '/images/livekit-safari-pinned-tab.svg', color: '#070707' },
     ],
   },
 };
